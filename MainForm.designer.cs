@@ -28,22 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dataGridViewShortcut = new System.Windows.Forms.DataGridView();
             this.shortcutGroup = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.desktopNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.shiftDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ctrlDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.altDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.keyNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewShortcut)).BeginInit();
             this.shortcutGroup.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewShortcut
             // 
             this.dataGridViewShortcut.AllowUserToAddRows = false;
             this.dataGridViewShortcut.AllowUserToDeleteRows = false;
+            this.dataGridViewShortcut.AutoGenerateColumns = false;
             this.dataGridViewShortcut.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewShortcut.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.desktopNameDataGridViewTextBoxColumn,
+            this.shiftDataGridViewCheckBoxColumn,
+            this.ctrlDataGridViewCheckBoxColumn,
+            this.altDataGridViewCheckBoxColumn,
+            this.keyNumberDataGridViewTextBoxColumn});
+            this.dataGridViewShortcut.DataSource = this.bindingSource1;
             this.dataGridViewShortcut.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewShortcut.Location = new System.Drawing.Point(3, 15);
             this.dataGridViewShortcut.Name = "dataGridViewShortcut";
@@ -87,6 +103,45 @@
             this.quitToolStripMenuItem.Text = "終了";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(DesktopSwitcher.ShortcutDef);
+            // 
+            // desktopNameDataGridViewTextBoxColumn
+            // 
+            this.desktopNameDataGridViewTextBoxColumn.DataPropertyName = "DesktopName";
+            this.desktopNameDataGridViewTextBoxColumn.HeaderText = "デスクトップ";
+            this.desktopNameDataGridViewTextBoxColumn.Name = "desktopNameDataGridViewTextBoxColumn";
+            this.desktopNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // shiftDataGridViewCheckBoxColumn
+            // 
+            this.shiftDataGridViewCheckBoxColumn.DataPropertyName = "Shift";
+            this.shiftDataGridViewCheckBoxColumn.HeaderText = "Shift";
+            this.shiftDataGridViewCheckBoxColumn.Name = "shiftDataGridViewCheckBoxColumn";
+            this.shiftDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // ctrlDataGridViewCheckBoxColumn
+            // 
+            this.ctrlDataGridViewCheckBoxColumn.DataPropertyName = "Ctrl";
+            this.ctrlDataGridViewCheckBoxColumn.HeaderText = "Ctrl";
+            this.ctrlDataGridViewCheckBoxColumn.Name = "ctrlDataGridViewCheckBoxColumn";
+            this.ctrlDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // altDataGridViewCheckBoxColumn
+            // 
+            this.altDataGridViewCheckBoxColumn.DataPropertyName = "Alt";
+            this.altDataGridViewCheckBoxColumn.HeaderText = "Alt";
+            this.altDataGridViewCheckBoxColumn.Name = "altDataGridViewCheckBoxColumn";
+            this.altDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // keyNumberDataGridViewTextBoxColumn
+            // 
+            this.keyNumberDataGridViewTextBoxColumn.DataPropertyName = "KeyNumber";
+            this.keyNumberDataGridViewTextBoxColumn.HeaderText = "キー";
+            this.keyNumberDataGridViewTextBoxColumn.Name = "keyNumberDataGridViewTextBoxColumn";
+            this.keyNumberDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -106,6 +161,7 @@
             this.shortcutGroup.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -117,5 +173,11 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn desktopNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn shiftDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ctrlDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn altDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn keyNumberDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DesktopSwitcher
@@ -26,16 +27,6 @@ namespace DesktopSwitcher
             this.onPushShortcuts += this.OnPushShortcut;
         }
 
-        private void OnPushShortcut(object sender, OnPushShortcutArgs e)
-        {
-            Console.WriteLine($"On push shortcut. index: {e.index}");
-
-            if (Switcher.Switchable(e.index))
-            {
-                Switcher.SwitchTo(e.index);
-            }
-        }
-
         private void OnHotkeyCallback(int wParam, Keys key)
         {
             Console.WriteLine($"On hotkey callback. wParam: {wParam}, key: {key}");
@@ -50,6 +41,16 @@ namespace DesktopSwitcher
             if (onNumber && onCtrl && onAlt)
             {
                 this.onPushShortcuts?.BeginInvoke(this, new OnPushShortcutArgs(keyNumbers.IndexOf(key)), OnEndPushShortcut, null);
+            }
+        }
+
+        private void OnPushShortcut(object sender, OnPushShortcutArgs e)
+        {
+            Console.WriteLine($"On push shortcut. index: {e.index}");
+
+            if (Switcher.Switchable(e.index))
+            {
+                Switcher.SwitchTo(e.index);
             }
         }
 
@@ -85,14 +86,19 @@ namespace DesktopSwitcher
 
         private void InitializeDataGridViewShortcut()
         {
-            var data = new DataTable();
-            data.Columns.Add("デスクトップ");
-            data.Columns.Add("Shift");
-            data.Columns.Add("Ctrl");
-            data.Columns.Add("Alt");
-            data.Columns.Add("キー");
+            var defs = new List<ShortcutDef>();
+            for (int i = 0; i < 10; i++)
+            {
+                var def = new ShortcutDef();
+                def.DesktopName = "None";
+                def.Shift = false;
+                def.Ctrl = true;
+                def.Alt = true;
+                def.KeyNumber = ((i + 1) % 10).ToString();
+                defs.Add(def);
+            }
 
-            this.dataGridViewShortcut.DataSource = data;
+            this.dataGridViewShortcut.DataSource = defs;
         }
 
         private void Quit()
@@ -100,22 +106,13 @@ namespace DesktopSwitcher
             Application.Exit();
         }
 
-        public void RefreshShortcuts()
+        private void RefreshShortcutDefs()
         {
-            var data = (DataTable)this.dataGridViewShortcut.DataSource;
-            data.Rows.Clear();
-
+            var defs = (List<ShortcutDef>)this.dataGridViewShortcut.DataSource;
             var desktopNames = Switcher.Names();
-            for (int i = 0; i < 10; i++)
+            foreach (var (def, index) in defs.Select((def, index) => (def, index)))
             {
-                var desktopName = i < desktopNames.Count ? desktopNames[i] : "None";
-                var row = data.NewRow();
-                row.SetField<string>(0, desktopName);
-                row.SetField<string>(1, "×");
-                row.SetField<string>(2, "〇");
-                row.SetField<string>(3, "〇");
-                row.SetField<string>(4, (i + 1 % 10).ToString());
-                data.Rows.Add(row);
+                def.DesktopName = index < desktopNames.Count ? desktopNames[index] : def.DesktopName;
             }
         }
 
@@ -130,22 +127,17 @@ namespace DesktopSwitcher
             }
         }
 
-        private void buttonApply_Click(object sender, EventArgs e)
+        private void MainForm_VisibleChanged(object sender, EventArgs e)
         {
-            this.RefreshShortcuts();
+            if (this.Visible)
+            {
+                this.RefreshShortcutDefs();
+            }
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Quit();
-        }
-
-        private void MainForm_VisibleChanged(object sender, EventArgs e)
-        {
-            if (this.Visible)
-            {
-                this.RefreshShortcuts();
-            }
         }
     }
 }
