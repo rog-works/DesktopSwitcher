@@ -51,6 +51,7 @@ namespace DesktopSwitcher
         {
             var to = VirtualDesktop.DesktopManager.GetDesktop(index);
             VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.SwitchDesktop(to);
+            VirtualDesktop.Desktop.FocusForegroundWindow();
         }
     }
 }

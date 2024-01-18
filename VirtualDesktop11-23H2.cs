@@ -7,7 +7,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
 
 // set attributes
@@ -736,6 +735,59 @@ namespace VirtualDesktop
             WindowInformation result = WindowInformationList.Find(x => x.Title.IndexOf(WindowTitle, StringComparison.OrdinalIgnoreCase) >= 0);
             return result;
         }
+
+        #region CustomImplements
+        public static string GetWindowTextFromPtr(IntPtr hWnd)
+        {
+            if (hWnd == IntPtr.Zero)
+            {
+                return "";
+            }
+
+            int length = GetWindowTextLength(hWnd);
+            if (length > 0)
+            {
+                StringBuilder sb = new StringBuilder(length + 1);
+                GetWindowText(hWnd, sb, sb.Capacity);
+                return sb.ToString();
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int X;
+            public int Y;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr WindowFromPoint(POINT point);
+
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out POINT lpPoint);
+
+        public static IntPtr GetForegroundWindowFromCursor()
+        {
+            POINT pos;
+            GetCursorPos(out pos);
+            return WindowFromPoint(pos);
+        }
+
+        public static bool FocusForegroundWindow()
+        {
+            var hWnd = GetForegroundWindowFromCursor();
+            if (hWnd != IntPtr.Zero)
+            {
+                return SetForegroundWindow(hWnd);
+            }
+
+            return true;
+        }
+        #endregion
     }
     #endregion
 }

@@ -41,10 +41,13 @@
             // 
             // dataGridViewShortcut
             // 
+            this.dataGridViewShortcut.AllowUserToAddRows = false;
+            this.dataGridViewShortcut.AllowUserToDeleteRows = false;
             this.dataGridViewShortcut.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewShortcut.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewShortcut.Location = new System.Drawing.Point(3, 15);
             this.dataGridViewShortcut.Name = "dataGridViewShortcut";
+            this.dataGridViewShortcut.ReadOnly = true;
             this.dataGridViewShortcut.RowTemplate.Height = 21;
             this.dataGridViewShortcut.Size = new System.Drawing.Size(569, 168);
             this.dataGridViewShortcut.TabIndex = 2;
@@ -80,7 +83,7 @@
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.quitToolStripMenuItem.Text = "終了";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -88,9 +91,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 227);
+            this.ClientSize = new System.Drawing.Size(600, 223);
             this.Controls.Add(this.shortcutGroup);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
