@@ -46,7 +46,7 @@ namespace DesktopSwitcher
 
         private void OnPushShortcut(object sender, OnPushShortcutArgs e)
         {
-            Console.WriteLine($"On push shortcut. index: {e.index}");
+            Logger.Debug($"On push shortcut. index: {e.index}");
 
             if (Switcher.Switchable(e.index))
             {
@@ -56,7 +56,7 @@ namespace DesktopSwitcher
 
         private void OnEndPushShortcut(IAsyncResult result)
         {
-            Console.WriteLine("On end push shortcut");
+            Logger.Debug("On end push shortcut");
 
             var ret = (System.Runtime.Remoting.Messaging.AsyncResult)result;
             var handler = (OnPushShortcutDelegate)ret.AsyncDelegate;

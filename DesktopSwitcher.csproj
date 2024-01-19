@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="ShortcutDef.cs" />
     <Compile Include="Hotkey.cs" />
     <Compile Include="MainForm.cs">

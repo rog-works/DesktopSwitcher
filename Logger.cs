@@ -17,6 +17,7 @@ namespace DesktopSwitcher
 
         private static Logger instance = null;
         private List<string> lines = new List<string>();
+        private bool alwaysFlush = false;
 
         public static Logger Get
         {
@@ -56,6 +57,12 @@ namespace DesktopSwitcher
             var date = DateTime.Now.ToString("yyyy:MM:dd-HH:mm:ss");
             this.lines.Add($"{date} [{level}] {line}");
             Console.WriteLine($"[{level}] {line}");
+
+            if (this.alwaysFlush)
+            {
+                this.FlushImpl();
+                this.lines.Clear();
+            }
         }
 
         public static void Flush()
