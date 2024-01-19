@@ -555,7 +555,7 @@ namespace VirtualDesktop
             DesktopManager.VirtualDesktopManagerInternal.SwitchDesktop(ivd);
 
             // direct desktop to give away focus
-            ShowWindow(new IntPtr(wi.Handle), SW_MINIMIZE);
+            // ShowWindow(new IntPtr(wi.Handle), SW_MINIMIZE);
         }
 
         public Desktop Left
@@ -779,7 +779,8 @@ namespace VirtualDesktop
 
         public static bool FocusForegroundWindow()
         {
-            var hWnd = GetForegroundWindowFromCursor();
+            var hWnd = GetForegroundWindow();
+            // var hWnd = GetForegroundWindowFromCursor();
             if (hWnd != IntPtr.Zero)
             {
                 return SetForegroundWindow(hWnd);

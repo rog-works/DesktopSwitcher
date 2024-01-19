@@ -49,9 +49,10 @@ namespace DesktopSwitcher
 
         private static void SwitchToInternal(int index)
         {
-            var to = VirtualDesktop.DesktopManager.GetDesktop(index);
-            VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.SwitchDesktop(to);
-            VirtualDesktop.Desktop.FocusForegroundWindow();
+            //var to = VirtualDesktop.DesktopManager.GetDesktop(index);
+            //VirtualDesktop.DesktopManager.VirtualDesktopManagerInternal.SwitchDesktop(to);
+            //VirtualDesktop.Desktop.FocusForegroundWindow();
+            VirtualDesktop.Desktop.FromIndex(index).MakeVisible();
         }
     }
 }
