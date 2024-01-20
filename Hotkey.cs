@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopSwitcher
@@ -24,22 +19,26 @@ namespace DesktopSwitcher
         private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
         private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
+        // private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
 
         private IntPtr hookId = IntPtr.Zero;
+        private HookProc gcGuard = null;
         private Action<int, Keys> keyAction;
 
         public Hotkey(Action<int, Keys> keyAction)
         {
             this.keyAction = keyAction;
+            // XXX メソッドであっても別変数に保持しないとGCによって削除されてしまい、エラーが発生するのでそれを抑制する
+            this.gcGuard = this.HookCallback;
             this.hookId = this.SetHook(this.HookCallback);
-            Console.WriteLine("instantiate");
         }
 
         ~Hotkey()
         {
             UnhookWindowsHookEx(this.hookId);
+            this.hookId = IntPtr.Zero;
+            this.gcGuard = null;
         }
 
         private IntPtr SetHook(HookProc proc)

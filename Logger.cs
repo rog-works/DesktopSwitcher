@@ -17,7 +17,7 @@ namespace DesktopSwitcher
 
         private static Logger instance = null;
         private List<string> lines = new List<string>();
-        private bool alwaysFlush = true;
+        private bool alwaysFlush = false;
 
         public static Logger Get
         {

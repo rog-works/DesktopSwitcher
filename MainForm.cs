@@ -29,7 +29,7 @@ namespace DesktopSwitcher
 
         private void OnHotkeyCallback(int wParam, Keys key)
         {
-            Logger.Debug($"On hotkey callback. wParam: {wParam}, key: {key}");
+            Console.WriteLine($"On hotkey callback. wParam: {wParam}, key: {key}");
 
             var keyNumbers = new List<Keys>() {
                 Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5,
