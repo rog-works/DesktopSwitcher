@@ -29,7 +29,7 @@ namespace DesktopSwitcher
 
         private void OnHotkeyCallback(int wParam, Keys key)
         {
-            Console.WriteLine($"On hotkey callback. wParam: {wParam}, key: {key}");
+            Logger.Debug($"On hotkey callback. wParam: {wParam}, key: {key}");
 
             var keyNumbers = new List<Keys>() {
                 Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5,
@@ -46,7 +46,7 @@ namespace DesktopSwitcher
 
         private void OnPushShortcut(object sender, OnPushShortcutArgs e)
         {
-            Logger.Debug($"On push shortcut. index: {e.index}");
+            Logger.Info($"On push shortcut. index: {e.index}");
 
             if (Switcher.Switchable(e.index))
             {
@@ -56,7 +56,7 @@ namespace DesktopSwitcher
 
         private void OnEndPushShortcut(IAsyncResult result)
         {
-            Logger.Debug("On end push shortcut");
+            Logger.Info("On end push shortcut");
 
             var ret = (System.Runtime.Remoting.Messaging.AsyncResult)result;
             var handler = (OnPushShortcutDelegate)ret.AsyncDelegate;
@@ -103,6 +103,8 @@ namespace DesktopSwitcher
 
         private void Quit()
         {
+            Logger.Info("Quit");
+
             Application.Exit();
         }
 
@@ -118,6 +120,8 @@ namespace DesktopSwitcher
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            Logger.Info("On form closing");
+
             base.OnFormClosing(e);
 
             if (e.CloseReason == CloseReason.UserClosing)
