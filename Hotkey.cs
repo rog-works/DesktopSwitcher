@@ -23,27 +23,21 @@ namespace DesktopSwitcher
         private const int WM_KEYUP = 0x0101;
 
         private IntPtr hookId = IntPtr.Zero;
-        private HookProc gcGuard = null;
+        private HookProc hookCallbackOfGCGuard;
         private Action<int, Keys> keyAction;
 
         public Hotkey(Action<int, Keys> keyAction)
         {
             this.keyAction = keyAction;
-            // XXX メソッドであっても別変数に保持しないとGCによって削除されてしまい、エラーが発生するのでそれを抑制する
-            this.gcGuard = this.HookCallback;
-            this.hookId = this.SetHook(this.HookCallback);
+            // XXX GCによる開放を防止するため、メソッドであっても別変数に保持する
+            this.hookCallbackOfGCGuard = this.HookCallback;
+            this.hookId = SetWindowsHookEx(WH_KEYBOARD_LL, this.hookCallbackOfGCGuard, ProcessManager.CurrentProcessHandle, 0); ;
         }
 
         ~Hotkey()
         {
             UnhookWindowsHookEx(this.hookId);
             this.hookId = IntPtr.Zero;
-            this.gcGuard = null;
-        }
-
-        private IntPtr SetHook(HookProc proc)
-        {
-            return SetWindowsHookEx(WH_KEYBOARD_LL, proc, ProcessManager.CurrentProcessHandle, 0);
         }
 
         private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
